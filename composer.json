@@ -6,7 +6,8 @@
         "elasticsearch/elasticsearch": "^7.4",
         "symfony/console": "^5.0",
         "slim/slim": "^4.0",
-        "slim/twig-view": "^2.5"
+        "slim/twig-view": "^2.5",
+        "slim/psr7": "^0.6.0"
     },
     "authors": [
         {

@@ -29,7 +29,8 @@ $container['view'] = function ($container) {
 
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hello world!");
-    return $response;
+
+    return $response->withStatus(200);
 });
 
 $app->run();

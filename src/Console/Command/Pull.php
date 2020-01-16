@@ -4,6 +4,10 @@ namespace University\WebScraper\Console\Command;
 
 use Elasticsearch\ClientBuilder;
 use PHPHtmlParser\Dom;
+use PHPHtmlParser\Exceptions\ChildNotFoundException;
+use PHPHtmlParser\Exceptions\CircularException;
+use PHPHtmlParser\Exceptions\CurlException;
+use PHPHtmlParser\Exceptions\StrictException;
 use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,12 +66,11 @@ class Pull extends Command
                     ];
 
                     $response = $client->index($params);
-                } catch (\PHPHtmlParser\Exceptions\ChildNotFoundException $e) {
-                } catch (\PHPHtmlParser\Exceptions\CircularException $e) {
-                } catch (\PHPHtmlParser\Exceptions\CurlException $e) {
-                } catch (\PHPHtmlParser\Exceptions\StrictException $e) {
+                } catch (ChildNotFoundException $e) {
+                } catch (CircularException $e) {
+                } catch (CurlException $e) {
+                } catch (StrictException $e) {
                 }
-
             }
             curl_close($ch);
         }

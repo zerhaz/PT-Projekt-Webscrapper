@@ -10,9 +10,15 @@ class Index extends AbstractController
 {
     protected $template = 'search/index.html';
 
+    /**
+     * @var Client
+     */
+    private $client;
+
     public function __construct(Slim $slim, Client $client)
     {
         parent::__construct($slim);
+        $this->client = $client;
     }
 
     public function execute()
@@ -20,10 +26,35 @@ class Index extends AbstractController
         $this->_isAllowed();
         $this->populatePageTitle('Search articles :)');
 
+        $params = [
+            'index' => 'pt-project',
+            'body' => [
+                //                'query' => [
+                //                    'match' => [
+                //                        'tags' => 'senat',
+                //                    ],
+                //                ],
+                'aggs' => [
+                    'tags' => [
+                        'terms' => [
+                            'field' => 'tags.keyword',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $response = $this->client->search($params);
+
+        $found = $response['hits']['total'];
+        $docs = $response['hits']['hits'];
+
+        $tags = $response['aggregations']['tags']['buckets'];
+
         $this->slim->render(
             $this->template,
             [
-
+                'tags' => $tags,
             ]
         );
     }

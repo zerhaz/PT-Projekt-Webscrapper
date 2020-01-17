@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} {{ pageTitle }} {% endblock %}
+{% block bodyClass %}{% endblock %}
+{% block content %}
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table">
+
+                <div class="row header">
+                    <div class="cell">
+                        Tytuł
+                    </div>
+                    <div class="cell">
+                        Treść
+                    </div>
+                    <div class="cell">
+                        Tagi
+                    </div>
+                    <div class="cell">
+                        Trafność
+                    </div>
+                    <div class="cell">
+                        Link
+                    </div>
+                </div>
+                {% for doc in result %}
+                <div class="row">
+
+                    <div class="cell" data-title="Tytuł">
+                        {{ doc._source.title }}
+                    </div>
+                    <div class="cell" data-title="Treść">
+                        {{ doc._source.body|slice(0, 150) ~ '...' }}
+                    </div>
+                    <div class="cell" data-title="Tagi">
+                       {{ doc._source.tags|join(', ') }}
+                    </div>
+                    <div class="cell" data-title="Trafność">
+                        {{ doc._score|round(2, 'floor') }}
+                    </div>
+                    <div class="cell" data-title="Link">
+                        <a href="{{ doc._id }}" target="_blank">Link</a>
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/popper.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="/js/main.js"></script>
+
+{% endblock %}

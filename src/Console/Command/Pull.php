@@ -12,7 +12,7 @@ use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use University\WebScraper\Processor\Onet;
+use University\WebScraper\Processor\ProcessorInterface;
 
 class Pull extends Command
 {
@@ -57,7 +57,7 @@ class Pull extends Command
                     $output->writeln(sprintf('Start download content from: %s.', $url));
                     $dom->loadFromUrl($url);
 
-                    /** @var Onet $processor */
+                    /** @var ProcessorInterface $processor */
                     $processor = new $details['processor']();
                     $params = [
                         'index' => 'pt-project',
@@ -74,6 +74,8 @@ class Pull extends Command
             }
             curl_close($ch);
         }
+
+        return 1;
     }
 
     protected function configure()

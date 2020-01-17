@@ -4,7 +4,7 @@ namespace University\WebScraper\Processor;
 
 use PHPHtmlParser\Dom;
 
-class Onet
+class Onet implements ProcessorInterface
 {
     public function parseDom(Dom $dom): array
     {
@@ -12,7 +12,10 @@ class Onet
         if ($dom) {
             // Title
             $articleTitle = $dom->find('h1.mainTitle');
-            $output['title'] = trim(strip_tags($articleTitle[0]));
+            $output['title'] = filter_var(
+                trim(strip_tags(html_entity_decode(htmlentities($articleTitle[0])))),
+                FILTER_SANITIZE_STRING
+            );
 
             // Body
             $articleBody = $dom->find('.articleBody');

@@ -46,10 +46,6 @@ class Pull extends Command
             $xml = new SimpleXMLElement($data);
             foreach ($xml->url as $url) {
                 $loc = $url->loc;
-                $pagesToSearch[] = [
-                    'url' => (string) $loc,
-                    'config' => $details,
-                ];
 
                 $dom = new Dom;
                 try {
